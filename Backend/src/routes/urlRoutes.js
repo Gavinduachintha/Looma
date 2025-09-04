@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", healthCheck);
 // router.get("/getMails", getMails);
-router.post("/summary",summary)
+router.get("/summary",summary)
 router.get("/auth", auth);
 router.get("/oauth2callback", oauth2callback);
 export default router;
