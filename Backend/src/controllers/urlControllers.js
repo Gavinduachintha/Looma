@@ -1,10 +1,10 @@
 import path from "path";
 import fs from "fs";
 import { google } from "googleapis";
-import { oAuth2Client } from "./services/auth.js";
+import { oAuth2Client } from "../services/auth.js";
 import axios from "axios";
 import dotenv from "dotenv";
-import db from "./config/db.js";
+import db from "../config/db.js";
 dotenv.config();
 
 const TOKEN_PATH = path.join("../token.json");
@@ -48,6 +48,7 @@ export const summary = async (req, res) => {
     for (const msg of messages) {
       const msgRes = await gmail.users.messages.get({
         userId: "me",
+        maxResults: 5,
         id: msg.id,
         format: "full",
       });
@@ -79,37 +80,27 @@ export const summary = async (req, res) => {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "moonshotai/kimi-k2:free",
+          model: "deepseek/deepseek-chat-v3.1:free",
           messages: [
             {
               role: "user",
               content: `You are an AI assistant. Analyze the following email and provide:
 
-1. A **clear, concise summary** in bullet points (1-2 sentences per point).  
-2. Any **events mentioned**, with their name, date, time, and venue in a JSON array.  
+              1. A **clear, concise summary** in bullet points ,3 or 4 points.  
+              2. Any **events mentioned**, with their name, date, time, and venue 
+              mark them in a separate bullet.
+              3. If it has a web link, mark it in a seperate bullet as well
+              use just plain text  
 
-Requirements:
-- Exclude greetings, signatures, or irrelevant text.
-- If no events are found, return an empty array for events.
+              Requirements:
+              - Exclude greetings, signatures, or irrelevant text.
+              
 
-Email:
-From: ${mail.from}
-Subject: ${mail.subject}
-Body: ${mail.body}
-
-Return the result in the following JSON format:
-
-{
-  "summary": ["bullet point 1", "bullet point 2", "..."],
-  "events": [
-    {
-      "event": "Event Name",
-      "date": "YYYY-MM-DD",
-      "time": "HH:MM",
-      "venue": "Location"
-    }
-  ]
-}`,
+              Email:
+              From: ${mail.from}
+              Subject: ${mail.subject}
+              Body: ${mail.body}
+              `,
             },
           ],
         },
@@ -141,10 +132,19 @@ Return the result in the following JSON format:
     }
 
     // 5️⃣ Return all summaries
-    res.json({ summaries });
+    res.json(summaries);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
+  }
+};
+
+export const fetchEmails = async (req, res) => {
+  try {
+    const response = await db.query("SELECT * FROM emails");
+    res.json(response.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
