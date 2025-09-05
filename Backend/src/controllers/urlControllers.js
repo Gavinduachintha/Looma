@@ -1,10 +1,11 @@
 import path from "path";
 import fs from "fs";
-import { google } from "googleapis";
-import { oAuth2Client } from "../services/auth.js";
 import axios from "axios";
 import dotenv from "dotenv";
+import { google } from "googleapis";
+import { oAuth2Client } from "../services/auth.js";
 import db from "../config/db.js";
+
 dotenv.config();
 
 const TOKEN_PATH = path.join("../token.json");
@@ -36,7 +37,7 @@ export const summary = async (req, res) => {
     // 2. Get latest 10 messages from INBOX
     const result = await gmail.users.messages.list({
       userId: "me",
-      maxResults: 2,
+      maxResults: 10,
       labelIds: ["INBOX"],
     });
 
@@ -48,7 +49,7 @@ export const summary = async (req, res) => {
     for (const msg of messages) {
       const msgRes = await gmail.users.messages.get({
         userId: "me",
-        maxResults: 5,
+        // maxResults: 10,
         id: msg.id,
         format: "full",
       });
@@ -84,22 +85,31 @@ export const summary = async (req, res) => {
           messages: [
             {
               role: "user",
-              content: `You are an AI assistant. Analyze the following email and provide:
+              content: `You are an AI assistant. Analyze the following email and provide the output in this structured format:
 
-              1. A **clear, concise summary** in bullet points ,3 or 4 points.  
-              2. Any **events mentioned**, with their name, date, time, and venue 
-              mark them in a separate bullet.
-              3. If it has a web link, mark it in a seperate bullet as well
-              use just plain text  
+Summary:
+- Bullet point 1
+- Bullet point 2
+- ...
 
-              Requirements:
-              - Exclude greetings, signatures, or irrelevant text.
-              
+Events:
+- Event Name: ...
+  Date: ...
+  Time: ...
+  Venue: ...
 
-              Email:
-              From: ${mail.from}
-              Subject: ${mail.subject}
-              Body: ${mail.body}
+Links:
+- https://...
+
+Requirements:
+- Exclude greetings, signatures, or irrelevant text.
+- If the mail has social media links like youtube, facebook, etc., omit them.
+- If there are no events or links, omit the Events or Links section from your response.
+
+Email:
+From: ${mail.from}
+Subject: ${mail.subject}
+Body: ${mail.body}
               `,
             },
           ],
@@ -147,35 +157,3 @@ export const fetchEmails = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// export const summary = async (req, res, text) => {
-//   const { content } = req.body;
-//   if (!content) {
-//     return res.status(400).json({ error: "All fields required" });
-//   }
-//   try {
-//     const response = await axios.post(
-//       "https://openrouter.ai/api/v1/chat/completions",
-//       {
-//         model: "moonshotai/kimi-k2:free",
-//         messages: [
-//           {
-//             role: "user",
-//             content: content,
-//           },
-//         ],
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${process.env.OPEN_AI_API}`,
-//           "HTTP-Referer": "https://your-site.com", // optional
-//           "X-Title": "My Cool App", // optional
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     return res.json({ message: response.data.choices[0].message.content });
-//   } catch (error) {
-//     return res.json({ error: error.message });
-//   }
-// };

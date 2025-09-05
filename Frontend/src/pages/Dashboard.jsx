@@ -19,13 +19,13 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
         {emails.map((mail) => (
           <EmailCard
-            key={mail.email_id}
-            email={mail.from_email}
+            key={mail.emailId}
+            email={mail.from}
             subject={mail.subject}
             summary={mail.summary}
             date={mail.date}
-            hovered={hoveredId === mail.email_id}
-            onHoverStart={() => setHoveredId(mail.email_id)}
+            hovered={hoveredId === mail.emailId}
+            onHoverStart={() => setHoveredId(mail.emailId)}
             onHoverEnd={() => setHoveredId(null)}
           />
         ))}
