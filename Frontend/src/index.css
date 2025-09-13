@@ -1,0 +1,434 @@
+@import "tailwindcss";
+
+/* Looma Color Variables - Supabase Theme */
+:root {
+  --primary: #3ecf8e;
+  --primary-hover: #2dd4bf;
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
+  --text: #0f0f23;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #10b981;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+[data-theme="dark"] {
+  --primary: #3ecf8e;
+  --primary-hover: #2dd4bf;
+  --background: #0a0a0a;
+  --background-secondary: #171717;
+  --text: #ffffff;
+  --text-muted: #a1a1a1;
+  --border: #262626;
+  --accent: #10b981;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+}
+
+/* Hidden Scrollbar - maintains scroll functionality but hides scrollbar */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+/* Base scrollbar width */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track with subtle inset & gradient for better contrast */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.05) 30%,
+    transparent
+  );
+  border-radius: 12px;
+  margin: 2px; /* create space so thumb looks pill shaped */
+}
+
+/* Light mode scrollbar */
+/* Light mode thumb */
+.custom-scrollbar-light::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #e2e8f0 0%, #d1d9e4 40%, #c0c9d4 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.custom-scrollbar-light::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #10b981, #34d399);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Dark mode scrollbar */
+/* Dark mode thumb */
+.custom-scrollbar-dark::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #374151 0%, #47515d 50%, #566270 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(4px);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #10b981, #059669);
+  border-color: rgba(31, 41, 55, 0.9);
+}
+
+/* Firefox */
+/* Firefox colors (thumb track) */
+.custom-scrollbar-light {
+  scrollbar-color: #c0c9d4 transparent;
+}
+
+.custom-scrollbar-dark {
+  scrollbar-color: #47515d transparent;
+}
+
+/* Smooth scrolling */
+.custom-scrollbar {
+  scroll-behavior: smooth;
+}
+
+/* Custom Calendar Dropdown Styles */
+.custom-date-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.custom-time-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Custom Calendar Widget Styling */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Style the calendar dropdown */
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background: var(--gradient-primary);
+  border-radius: 6px;
+  opacity: 1;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  background: var(--gradient-primary);
+  border-radius: 6px;
+  opacity: 1;
+}
+
+/* Modern Calendar Popup Styling (where supported) */
+.custom-date-input {
+  position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+.custom-time-input {
+  position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* Dark mode icons */
+.custom-date-input-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%9ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+}
+
+.custom-time-input-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%9ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");
+}
+
+/* Webkit Date Picker Styling */
+::-webkit-datetime-edit {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+::-webkit-datetime-edit-text {
+  padding: 0 4px;
+  font-weight: 500;
+}
+
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-year-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-ampm-field {
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+::-webkit-datetime-edit-month-field:hover,
+::-webkit-datetime-edit-day-field:hover,
+::-webkit-datetime-edit-year-field:hover,
+::-webkit-datetime-edit-hour-field:hover,
+::-webkit-datetime-edit-minute-field:hover,
+::-webkit-datetime-edit-ampm-field:hover {
+  background: rgba(174, 117, 218, 0.1);
+  color: var(--primary-lavender);
+}
+
+::-webkit-datetime-edit-month-field:focus,
+::-webkit-datetime-edit-day-field:focus,
+::-webkit-datetime-edit-year-field:focus,
+::-webkit-datetime-edit-hour-field:focus,
+::-webkit-datetime-edit-minute-field:focus,
+::-webkit-datetime-edit-ampm-field:focus {
+  background: rgba(174, 117, 218, 0.2);
+  color: var(--primary-lavender);
+  outline: none;
+}
+
+/* Advanced Calendar Dropdown Customization */
+.custom-calendar-container {
+  position: relative;
+}
+
+/* Modern Calendar Popup (Limited browser support) */
+@supports (-webkit-appearance: none) {
+  input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Custom Calendar Styles for supported browsers */
+.custom-date-input:focus,
+.custom-time-input:focus {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Enhanced hover states */
+.custom-date-input:hover,
+.custom-time-input:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -8px rgba(139, 92, 246, 0.3);
+}
+
+.custom-date-input:focus,
+.custom-time-input:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -8px rgba(139, 92, 246, 0.4);
+}
+
+/* Smooth scrolling */
+.custom-scrollbar {
+  scroll-behavior: smooth;
+}
+
+/* Custom Date and Time Input Styles */
+.custom-date-input,
+.custom-time-input {
+  position: relative;
+}
+
+/* Hide default calendar and clock icons */
+.custom-date-input::-webkit-calendar-picker-indicator,
+.custom-time-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Style for light mode */
+.custom-date-input-light,
+.custom-time-input-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+.custom-time-input-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* Style for dark mode */
+.custom-date-input-dark,
+.custom-time-input-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%9ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+.custom-time-input-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%9ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* Custom calendar dropdown styles */
+.custom-date-input::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.custom-date-input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+.custom-date-input::-webkit-datetime-edit-text {
+  padding: 0 2px;
+}
+
+.custom-date-input::-webkit-datetime-edit-month-field,
+.custom-date-input::-webkit-datetime-edit-day-field,
+.custom-date-input::-webkit-datetime-edit-year-field {
+  padding: 0 2px;
+}
+
+/* Custom time input styles */
+.custom-time-input::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.custom-time-input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+.custom-time-input::-webkit-datetime-edit-hour-field,
+.custom-time-input::-webkit-datetime-edit-minute-field,
+.custom-time-input::-webkit-datetime-edit-ampm-field {
+  padding: 0 2px;
+}
+
+.custom-time-input::-webkit-datetime-edit-text {
+  padding: 0 2px;
+}
+
+/* Hover effects for custom inputs */
+.custom-date-input:hover::-webkit-calendar-picker-indicator,
+.custom-time-input:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  background: var(--gradient-primary);
+  border-radius: 6px;
+  padding: 2px;
+}
+/* Rich Text Editor Styles */
+.rich-text-editor {
+  font-family: inherit;
+}
+
+.rich-text-editor p {
+  margin: 0.5em 0;
+}
+
+.rich-text-editor ul,
+.rich-text-editor ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.rich-text-editor li {
+  margin: 0.25em 0;
+}
+
+.rich-text-editor strong,
+.rich-text-editor b {
+  font-weight: 600;
+}
+
+.rich-text-editor em,
+.rich-text-editor i {
+  font-style: italic;
+}
+
+.rich-text-editor u {
+  text-decoration: underline;
+}
+
+.rich-text-editor a {
+  color: #10b981;
+  text-decoration: underline;
+}
+
+.rich-text-editor a:hover {
+  color: #059669;
+}
+
+/* Dark mode rich text editor styles */
+[data-theme="dark"] .rich-text-editor a {
+  color: #34d399;
+}
+
+[data-theme="dark"] .rich-text-editor a:hover {
+  color: #10b981;
+}
+
+/* Toolbar button active states */
+.toolbar-button-active {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
+}
+
+/* Rich text editor focus styles */
+.rich-text-editor:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
